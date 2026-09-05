@@ -1,0 +1,10 @@
+{
+  "name": "House Warming Ceremony - Muhammed & Jasheera",
+  "short_name": "House Warming",
+  "description": "House Warming Ceremony Invitation of Muhammed & Jasheera, Kunnukara, Ernakulam",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#012B19",
+  "theme_color": "#012B19",
+  "icons": []
+}
