@@ -158,14 +158,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fallback: start music on first user interaction if browser blocked autoplay initially
     let musicStarted = false;
+
+    // iOS Safari requires AudioContext to be resumed on a user gesture
+    function unlockAudioContext() {
+        if (bgAudio && bgAudio.paused) {
+            // Create a tiny silent audio context to unlock the AudioContext
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) {
+                    const ctx = new AudioCtx();
+                    const buf = ctx.createBuffer(1, 1, 22050);
+                    const src = ctx.createBufferSource();
+                    src.buffer = buf;
+                    src.connect(ctx.destination);
+                    src.start(0);
+                    ctx.resume().catch(() => {});
+                }
+            } catch (e) {
+                // silently ignore — not all browsers support this
+            }
+        }
+    }
+
     function tryStartMusicOnce() {
         if (musicStarted || !bgAudio) return;
+        unlockAudioContext();
         if (bgAudio.paused) {
             playAudio();
+            if (!bgAudio.paused) musicStarted = true;
+        } else {
             musicStarted = true;
         }
     }
-    ['click', 'touchstart', 'keydown', 'pointerdown'].forEach(evt => {
+    ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown'].forEach(evt => {
         document.addEventListener(evt, tryStartMusicOnce, { once: true, passive: true });
     });
 
