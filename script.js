@@ -170,26 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // ==========================================
-    // 4. FLOATING PARTICLES (ambient gold dust)
-    // ==========================================
-    const particlesContainer = document.getElementById('particles');
-    if (particlesContainer) {
-        const particleCount = window.innerWidth < 768 ? 16 : 28;
-        for (let i = 0; i < particleCount; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            const size = 3 + Math.random() * 4;
-            p.style.width = `${size}px`;
-            p.style.height = `${size}px`;
-            p.style.left = `${Math.random() * 100}%`;
-            p.style.setProperty('--drift', `${(Math.random() * 60 - 30)}px`);
-            const duration = 10 + Math.random() * 12;
-            p.style.animationDuration = `${duration}s`;
-            p.style.animationDelay = `${Math.random() * duration}s`;
-            particlesContainer.appendChild(p);
-        }
-    }
 
 
     // ==========================================
